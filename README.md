@@ -1,2 +1,64 @@
-# encryptii
-Encryptii helps with secure encryption for files at rest, files in transmit, and has advanced social engineering prevention (pop-ups that directly come up when you might do something that someone is trying to get you to do) and can be used personally or can be applied to other projects/ businesses, etc. (full description in project)
+# Encryptii
+
+Encryptii is an adaptive, user-friendly encryption toolkit designed to protect files at rest and in transit while minimizing metadata leakage and performance impact. It pairs secure defaults with an easy quiz-based workflow that recommends encryption and metadata-protection profiles for personal users and businesses. This beta implements the core encryption engine and Level-1 metadata protections; additional advanced protections are planned.
+
+---
+
+## ✨ Key Goals
+
+- Provide strong, practical encryption that’s easy to use.
+- Reduce metadata leakage (file names, sizes, timing, structure) with pragmatic features.
+- Offer adaptive encryption profiles so protection matches use-case constraints (e.g., low-latency gaming vs. archival storage).
+- Demonstrate social-engineering prevention through UI warnings and role-based examples.
+
+---
+
+## 🧩 Technologies
+
+- Frontend: Plain **HTML**, **CSS**, **JavaScript** (static)
+- Backend: **Python** (encryption engine)
+- Python libraries (might not use all of them): `cryptography`, `Flask` or `FastAPI`
+- Packaging / distribution: `PyInstaller` (optional for desktop beta)
+
+---
+
+## 🚀 Beta Features (What works now)
+
+- AES-GCM encryption/decryption for files (AES-256-GCM default)
+- Lightweight / Standard encryption modes (toggleable)
+- `.encpkg` container format (encrypted header with encrypted filename)
+- Small padding for tiny files (Level-1 metadata protection)
+- Quiz system that maps user answers to a profile:
+  - Metadata sensitivity
+  - At-rest vs in-transit preference
+  - Performance sensitivity
+  - Role (Admin / User / Developer)
+- Social-engineering **demo** UI (preview pop-ups and role-based warnings)
+- Clear placeholders for planned features (with explanations)
+
+---
+
+## ❗ Beta Limitations (what is intentionally omitted)
+
+The following are **not** included in this beta release and will be added in later versions:
+
+- HSM integration and enterprise key vaults
+- Network-level traffic shaping, VPN/multi-hop transfers
+- Real-time social-engineering detection/AI
+- Key rotation, automated revocation workflows
+- Full metadata protection Level 2 / 3 (advanced traffic obfuscation)
+
+Clicking these areas in the UI shows a clear, professional placeholder message explaining the missing functionality and planned timeline.
+
+---
+
+## 🔐 Security & Design Notes
+
+- Uses authenticated encryption (AEAD) to prevent tampering and provide integrity.
+- Keys are derived/stored using secure KDF and encrypted local storage in the beta.
+- Default modes favor safe parameters; users can select lighter profiles when performance is critical.
+- This beta is intended for evaluation and demonstration. Do not rely on the beta for production-critical secrets until upgrades (HSM/key lifecycle and audited code) are implemented.
+
+---
+
+
