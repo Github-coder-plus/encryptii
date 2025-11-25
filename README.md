@@ -61,4 +61,50 @@ Clicking these areas in the UI shows a clear, professional placeholder message e
 
 ---
 
+## 🧪 Example Encrypt/Decrypt CLI (for testing)
+(not sure if this works)
+``` python
+python -c "from backend.encrypt import encrypt_file; encrypt_file('test.txt','test.encpkg','mypassword')"
+python -c "from backend.encrypt import decrypt_file; decrypt_file('test.encpkg','out.txt','mypassword')"
+```
 
+(Implementations included in backend/encrypt.py)
+
+---
+
+## 🛣 Roadmap (Near Term)
+
+- Improve key lifecycle: encrypted vault + passphrase recovery
+- Add ChaCha20-Poly1305 and algorithm selection for performance-sensitive flows
+- Implement Level-2 metadata protections: uniform padding, batching
+- Add secure server-to-server transfer demo
+- HSM / cloud KMS integration (enterprise module)
+- Automated tests and third-party security audit
+
+---
+
+## 📄 License
+
+This project is released under the BSD 3-Clause License. See LICENSE for details.
+
+---
+
+## 🤝 Contributing
+
+- Open an issue for bugs or feature requests
+- Use small PRs focused on one change
+- Document important security implications when changing crypto logic
+- Do **not** change cryptographic primitives without review
+
+---
+
+## ✉️ Contact / Feedback
+
+To test, collaborate, or audit the encryption engine:
+- Open an issue or DM me at (filler)
+
+---
+
+## Acknowledgements
+
+Built as a focused, pragmatic beta to demonstrate adaptive encryption and metadata protection patterns. Inspired by best practices in applied cryptography and privacy engineering.
