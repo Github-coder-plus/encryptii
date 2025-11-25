@@ -232,3 +232,99 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
+/* ===============================
+   Top Bar Buttons
+=============================== */
+.top-bar button {
+    background: #202020;
+    border: 1px solid #2e2e2e;
+    padding: 8px 14px;
+    cursor: pointer;
+    color: #f9fafb;
+    font-weight: 500;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.top-bar button:hover {
+    background: #4f46e5;
+    color: #f9fafb;
+}
+
+/* ===============================
+   Main Container Layout
+=============================== */
+.main-container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    gap: 1rem;
+}
+
+/* ===============================
+   Left Panel (Description / Options)
+=============================== */
+.left-panel {
+    width: 350px;
+    background-color: #1f2937; /* matches existing left panel */
+    border-right: 1px solid #4f46e5;
+    padding: 1.5rem;
+    overflow-y: auto;
+    border-radius: 16px;
+    scrollbar-width: thin;
+    scrollbar-color: #4f46e5 #1f2937;
+}
+
+.left-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.left-panel::-webkit-scrollbar-thumb {
+    background-color: #4f46e5;
+    border-radius: 8px;
+}
+
+.left-panel h2, .left-panel h3 {
+    color: #7c3aed;
+    margin-bottom: 0.5rem;
+}
+
+/* ===============================
+   Terminal Panel (Output)
+=============================== */
+.terminal-panel {
+    flex: 1;
+    background-color: #111827; /* consistent with existing terminal-output */
+    padding: 1rem;
+    border-radius: 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    overflow-y: auto;
+    box-shadow: inset 0 0 10px rgba(79,70,229,0.2);
+}
+
+.terminal-panel p {
+    margin-bottom: 0.5rem;
+}
+
+/* ===============================
+   Left Panel Buttons (Options)
+=============================== */
+.left-panel button {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.2s ease;
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    color: #f9fafb;
+}
+
+.left-panel button:hover {
+    filter: brightness(1.1);
+}
