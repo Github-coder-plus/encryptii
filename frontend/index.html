@@ -1,63 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Encryptii</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryptii Alpha</title>
 
-    <!-- Inter Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css" />
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <div class="grid-container">
-
-        <!-- Top Bar -->
-        <div class="top-bar">
-            Encryptii — Encryption & Social Engineering Prevention
-        </div>
-
-        <!-- Left Panel -->
-        <div class="left-panel">
-            <h2>Actions</h2>
-            <p>Select an operation below.</p>
-
-            <button class="btn btn-primary">Encrypt File</button>
-            <button class="btn btn-primary">Decrypt File</button>
-
-            <div class="mb-4"></div>
-
-            <h3>Metadata Quiz</h3>
-            <p>Determine correct encryption type.</p>
-            <button class="btn btn-secondary">Start Quiz</button>
-
-            <div class="mb-4"></div>
-
-            <h3>Security Guide</h3>
-            <p>Basic protection tips & key management.</p>
-            <button class="btn btn-secondary">View Guide</button>
-        </div>
-
-        <!-- Right Panel (Terminal Area) -->
-        <div class="right-panel">
-
-            <h2 class="mb-2">Terminal Output</h2>
-
-            <div class="terminal-output" id="terminal">
-                <p class="log-info">[System] Ready.</p>
-            </div>
-
-        </div>
+    <!-- TOP NAVIGATION -->
+    <div class="top-bar">
+        <button id="nav-encryption-rest">Encryption (At Rest)</button>
+        <button id="nav-encryption-quiz">Encryption Needs Quiz (Business)</button>
+        <button id="nav-metadata">Metadata Protection Quiz</button>
+        <button id="nav-social-engineering">Social Engineering Quiz</button>
+        <button id="nav-device-security">Device & Account Security</button>
+        <button id="nav-network-exposure">Network Exposure Quiz</button>
     </div>
 
-    <!-- Scripts -->
-    <script src="script.js"></script>
+    <!-- MAIN CONTENT AREA -->
+    <div class="main-container">
 
+        <!-- LEFT DESCRIPTION/CHOICE PANEL -->
+        <div class="left-panel" id="left-panel">
+            <h2>Category Description</h2>
+            <p>Select a category from the top bar to view options.</p>
+
+            <hr>
+
+            <h3>Options</h3>
+            <button>Start Quiz</button>
+            <button>Show Overview</button>
+            <button>Recommended Actions</button>
+        </div>
+
+        <!-- TERMINAL PANEL (OUTPUT AREA) -->
+        <div class="terminal-panel" id="terminal">
+            <p>Awaiting input...</p>
+        </div>
+
+    </div>
+
+    <!-- Link to external JS -->
+    <script src="script.js"></script>
 </body>
 </html>
