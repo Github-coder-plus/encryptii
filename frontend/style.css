@@ -328,3 +328,43 @@ input:focus, select:focus, textarea:focus {
 .left-panel button:hover {
     filter: brightness(1.1);
 }
+
+
+/* ===============================
+   Body / Base
+=============================== */
+body {
+    margin: 0;
+    padding: 1rem; /* adds gap around the whole layout */
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #111827; /* dark overall background */
+    font-family: 'Inter', sans-serif;
+    color: #f9fafb;
+}
+
+/* ===============================
+   Main Container
+=============================== */
+.main-container {
+    display: flex;
+    flex: 1;
+    gap: 1rem;
+    margin-top: 1rem; /* adds vertical spacing from top-bar */
+    height: calc(100% - 4rem); /* adjusts height considering padding + top-bar */
+    overflow: hidden;
+}
+
+/* ===============================
+   Top Bar
+=============================== */
+.top-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 20px;
+    background: #161616;
+    border-radius: 12px; /* add rounded edges for the top bar */
+    border-bottom: 1px solid #242424;
+}
