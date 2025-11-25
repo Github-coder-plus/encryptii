@@ -3,52 +3,61 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Encryptii</title>
 
     <!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Main CSS -->
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css" />
-
-    <title>Your Project Name</title>
 </head>
 
 <body>
 
-    <!-- Main Layout Grid -->
-    <div class="layout">
+    <div class="grid-container">
 
         <!-- Top Bar -->
-        <header class="topbar">
-            <div class="logo">YourLogo</div>
-            <nav class="nav">
-                <a href="#">Docs</a>
-                <a href="#">Actions</a>
-                <a href="#">About</a>
-            </nav>
-        </header>
+        <div class="top-bar">
+            Encryptii — Encryption & Social Engineering Prevention
+        </div>
 
-        <!-- Left Panel / Description -->
-        <aside class="sidebar">
-            <h2>Action Description</h2>
-            <p>This panel explains what the selected tool or action does. Keep it simple and direct.</p>
-        </aside>
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <h2>Actions</h2>
+            <p>Select an operation below.</p>
 
-        <!-- Terminal-ish Area -->
-        <main class="terminal">
-            <div class="terminal-output" id="terminal-output">
-                <!-- JS will append text here later -->
+            <button class="btn btn-primary">Encrypt File</button>
+            <button class="btn btn-primary">Decrypt File</button>
+
+            <div class="mb-4"></div>
+
+            <h3>Metadata Quiz</h3>
+            <p>Determine correct encryption type.</p>
+            <button class="btn btn-secondary">Start Quiz</button>
+
+            <div class="mb-4"></div>
+
+            <h3>Security Guide</h3>
+            <p>Basic protection tips & key management.</p>
+            <button class="btn btn-secondary">View Guide</button>
+        </div>
+
+        <!-- Right Panel (Terminal Area) -->
+        <div class="right-panel">
+
+            <h2 class="mb-2">Terminal Output</h2>
+
+            <div class="terminal-output" id="terminal">
+                <p class="log-info">[System] Ready.</p>
             </div>
-            <div class="terminal-input-area">
-                <input type="text" id="terminal-input" placeholder="Enter command..." />
-            </div>
-        </main>
 
+        </div>
     </div>
 
-    <!-- JavaScript -->
+    <!-- Scripts -->
     <script src="script.js"></script>
+
 </body>
 </html>
