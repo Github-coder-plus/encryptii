@@ -1,4 +1,54 @@
 <!DOCTYPE html>
-<html>
-  
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Your Project Name</title>
+</head>
+
+<body>
+
+    <!-- Main Layout Grid -->
+    <div class="layout">
+
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="logo">YourLogo</div>
+            <nav class="nav">
+                <a href="#">Docs</a>
+                <a href="#">Actions</a>
+                <a href="#">About</a>
+            </nav>
+        </header>
+
+        <!-- Left Panel / Description -->
+        <aside class="sidebar">
+            <h2>Action Description</h2>
+            <p>This panel explains what the selected tool or action does. Keep it simple and direct.</p>
+        </aside>
+
+        <!-- Terminal-ish Area -->
+        <main class="terminal">
+            <div class="terminal-output" id="terminal-output">
+                <!-- JS will append text here later -->
+            </div>
+            <div class="terminal-input-area">
+                <input type="text" id="terminal-input" placeholder="Enter command..." />
+            </div>
+        </main>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
 </html>
