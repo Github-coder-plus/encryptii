@@ -3,47 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encryptii Alpha</title>
-
-    <!-- Link to external CSS -->
+    <title>Encryption Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- TOP NAVIGATION -->
+    <!-- ===============================
+         Top Bar
+    ================================ -->
     <div class="top-bar">
-        <button id="nav-encryption-rest">Encryption (At Rest)</button>
-        <button id="nav-encryption-quiz">Encryption Needs Quiz (Business)</button>
-        <button id="nav-metadata">Metadata Protection Quiz</button>
-        <button id="nav-social-engineering">Social Engineering Quiz</button>
-        <button id="nav-device-security">Device & Account Security</button>
-        <button id="nav-network-exposure">Network Exposure Quiz</button>
+        <button id="btn-about">About</button>
+        <button id="btn-encryption">Individual Encryption</button>
+        <button id="btn-quiz-level">Quiz (Level)</button>
+        <button id="btn-quiz-metadata">Quiz (Metadata)</button>
+        <button id="btn-social">Social Engineering Quiz</button>
     </div>
 
-    <!-- MAIN CONTENT AREA -->
+    <!-- ===============================
+         Main Container (Left + Right)
+    ================================ -->
     <div class="main-container">
 
-        <!-- LEFT DESCRIPTION/CHOICE PANEL -->
+        <!-- Left Panel: Description & Options -->
         <div class="left-panel" id="left-panel">
-            <h2>Category Description</h2>
-            <p>Select a category from the top bar to view options.</p>
-
-            <hr>
-
-            <h3>Options</h3>
-            <button>Start Quiz</button>
-            <button>Show Overview</button>
-            <button>Recommended Actions</button>
+            <h2>Welcome</h2>
+            <p>Select an option from the top bar to see details here.</p>
+            <!-- Buttons for sub-actions can appear dynamically here -->
         </div>
 
-        <!-- TERMINAL PANEL (OUTPUT AREA) -->
-        <div class="terminal-panel" id="terminal">
-            <p>Awaiting input...</p>
+        <!-- Right Panel: Terminal Output -->
+        <div class="terminal-panel" id="terminal-panel">
+            <p class="log-info">Terminal output will appear here.</p>
         </div>
 
     </div>
 
-    <!-- Link to external JS -->
     <script src="script.js"></script>
 </body>
 </html>
