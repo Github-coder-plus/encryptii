@@ -1,4 +1,4 @@
-#  Improrted code made by Github-Coder-plus 
+#  Imported code made by Github-Coder-plus 
 #  Code made over 3 months of testing
 
 import os
