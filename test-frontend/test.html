@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Encryptii JS Test</title>
+</head>
+<body>
+<h2>Encryptii Test</h2>
+
+<!-- File input -->
+<input type="file" id="fileInput"><br><br>
+
+<!-- Algorithm selector -->
+<select id="algorithm">
+  <option value="aes-128">AES-128</option>
+  <option value="aes-256" selected>AES-256</option>
+  <option value="chacha20">ChaCha20</option>
+</select><br><br>
+
+<!-- Buttons -->
+<button id="encryptBtn">Encrypt</button>
+<button id="decryptBtn">Decrypt</button><br><br>
+
+<!-- Key input for decryption -->
+<input type="text" id="keyInput" placeholder="Enter key for decryption"><br><br>
+
+<!-- Output -->
+<div id="output"></div>
+
+<script src="test.js"></script>
+</body>
+</html>
