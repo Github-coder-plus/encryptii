@@ -22,13 +22,16 @@ def save_file(file):
 def encrypt_file():
     if 'file' not in request.files:
         return jsonify({"error": "No file provided"}), 400
-    file = request.files['file']
-    algorithm = request.form.get('algorithm', 'aes-256')  # default AES-256
 
+    file = request.files['file']
+    algorithm = request.form.get('algorithm', 'aes-256')
+
+    # Save uploaded file safely
     path = save_file(file)
     with open(path, 'rb') as f:
         data = f.read()
 
+    # Run chosen algorithm
     if algorithm == 'aes-128':
         ciphertext, key = encrypt_aes(data, key_size=16)
     elif algorithm == 'aes-256':
@@ -38,49 +41,68 @@ def encrypt_file():
     else:
         return jsonify({"error": "Unknown algorithm"}), 400
 
-    # Save encrypted file
-    encrypted_path = path + '.enc'
+    # Prepare temporary output
+    encrypted_path = path + ".enc"
     with open(encrypted_path, 'wb') as f:
         f.write(ciphertext)
 
-    # Return encrypted file and key (key in hex for simplicity)
-    return jsonify({
-        "encrypted_file": encrypted_path,
-        "key": key.hex(),
-        "algorithm": algorithm
-    })
+    # Return as file + key in header
+    response = send_file(
+        encrypted_path,
+        mimetype="application/octet-stream",
+        as_attachment=True,
+        download_name=os.path.basename(encrypted_path)
+    )
+    response.headers["X-Key"] = key.hex()
+    response.headers["X-Algorithm"] = algorithm
+    return response
+
 
 # Optional: Decrypt endpoint for testing
 @app.route('/decrypt', methods=['POST'])
 def decrypt_file():
-    if 'file' not in request.files or 'key' not in request.form or 'algorithm' not in request.form:
-        return jsonify({"error": "Missing parameters"}), 400
+    if 'file' not in request.files:
+        return jsonify({"error": "No encrypted file provided"}), 400
+    if 'key' not in request.form:
+        return jsonify({"error": "Missing decryption key"}), 400
+    if 'algorithm' not in request.form:
+        return jsonify({"error": "Missing algorithm"}), 400
 
     file = request.files['file']
     key_hex = request.form['key']
     algorithm = request.form['algorithm']
     key = bytes.fromhex(key_hex)
 
+    # Save uploaded encrypted file
     path = save_file(file)
     with open(path, 'rb') as f:
-        data = f.read()
+        encrypted_data = f.read()
 
+    # Attempt decryption
     try:
-        if algorithm == 'aes-128' or algorithm == 'aes-256':
-            plaintext = decrypt_aes(data, key)
+        if algorithm in ['aes-128', 'aes-256']:
+            plaintext = decrypt_aes(encrypted_data, key)
         elif algorithm == 'chacha20':
-            plaintext = decrypt_chacha(data, key)
+            plaintext = decrypt_chacha(encrypted_data, key)
         else:
             return jsonify({"error": "Unknown algorithm"}), 400
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
+    except Exception as e:
+        return jsonify({"error": "Decryption failed", "details": str(e)}), 500
+
+    # Save output to temporary file
+    output_path = path + ".dec"
+    with open(output_path, 'wb') as f:
+        f.write(plaintext)
+
+    # Download plaintext file
     return send_file(
-        path_or_file=path,
+        output_path,
         mimetype='application/octet-stream',
         as_attachment=True,
-        download_name='decrypted_output.txt'
+        download_name='decrypted_output'
     )
+
 
 if __name__ == '__main__':
     app.run(debug=True)
