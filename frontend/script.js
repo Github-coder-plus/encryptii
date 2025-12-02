@@ -27,6 +27,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+function terminalAppend(msg, type = "info") {
+    const panel = document.getElementById("terminal-panel");
+    const p = document.createElement("p");
+
+    if (type === "error") p.className = "log-error";
+    else if (type === "success") p.className = "log-success";
+    else p.className = "log-info";
+
+    p.textContent = msg;
+    panel.appendChild(p);
+    panel.scrollTop = panel.scrollHeight;
+}
+
+function terminalClear() {
+    const panel = document.getElementById("terminal-panel");
+    panel.innerHTML = `<p class="log-info">Terminal cleared.</p>`;
+    document.getElementById("clear-terminal").classList.add("hidden");
+}
+
+
 // Utility: Replace left panel content
 function loadLeftPanel(html) {
     const panel = document.getElementById("left-panel");
