@@ -27,25 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-function terminalAppend(msg, type = "info") {
-    const panel = document.getElementById("terminal-panel");
-    const p = document.createElement("p");
-
-    if (type === "error") p.className = "log-error";
-    else if (type === "success") p.className = "log-success";
-    else p.className = "log-info";
-
-    p.textContent = msg;
-    panel.appendChild(p);
-    panel.scrollTop = panel.scrollHeight;
-}
-
-function terminalClear() {
-    const panel = document.getElementById("terminal-panel");
-    panel.innerHTML = `<p class="log-info">Terminal cleared.</p>`;
-    document.getElementById("clear-terminal").classList.add("hidden");
-}
-
 
 // Utility: Replace left panel content
 function loadLeftPanel(html) {
@@ -108,6 +89,44 @@ const businessEncryptionQuizHTML = `
 <p>Test your business encryption knowledge. Click the button below to start the quiz.</p>
 <button id="start-business-quiz">Start Quiz</button>
 `;
+const metadataQuizHTML = `<h2>Metadata Protection</h2><p>Coming soon.</p>`;
+const socialEngineeringQuizHTML = `<h2>Social Engineering</h2><p>Coming soon.</p>`;
+
+
+// Business quiz logic
+
+// ===============================
+// Terminal Utilities
+// ===============================
+function terminalAppend(msg, type = "info") {
+    const panel = document.getElementById("terminal-panel");
+    const p = document.createElement("p");
+
+    if (type === "error") p.className = "log-error";
+    else if (type === "success") p.className = "log-success";
+    else p.className = "log-info";
+
+    p.textContent = msg;
+    panel.appendChild(p);
+    panel.scrollTop = panel.scrollHeight;
+}
+
+function terminalClear() {
+    const panel = document.getElementById("terminal-panel");
+    panel.innerHTML = `<p class="log-info">Terminal cleared.</p>`;
+    document.getElementById("clear-terminal").classList.add("hidden");
+}
+
+// ===============================
+// Clear Terminal Button
+// ===============================
+document.getElementById("clear-terminal").onclick = () => {
+    terminalClear();
+};
+
+// ===============================
+// Business Quiz Data
+// ===============================
 const businessQuiz = [
     {
         q: "1. What type of data does your business store?",
@@ -126,54 +145,65 @@ const businessQuiz = [
         options: ["A: Speed", "B: Strong encryption", "C: Maximum strength", "D: Long-term confidentiality"]
     }
 ];
-const metadataQuizHTML = `<h2>Metadata Protection</h2><p>Coming soon.</p>`;
-const socialEngineeringQuizHTML = `<h2>Social Engineering</h2><p>Coming soon.</p>`;
 
-
-// Buisness Quiz Logic
+// ===============================
+// Quiz State
+// ===============================
 let quizIndex = 0;
 let quizAnswers = [];
 let quizActive = false;
 
+// ===============================
+// Start Quiz
+// ===============================
 function startBusinessQuiz() {
-    terminalClear();
+    terminalClear(); // Fix: clear terminal at start
     quizIndex = 0;
     quizAnswers = [];
     quizActive = true;
-    terminalAppend("Business Encryption Quiz started! Type A, B, C, or D and press Enter.");
+    terminalAppend("Business Encryption Quiz started! Click a button to answer.");
     showQuizQuestion();
 }
 
+// ===============================
+// Show One Question at a Time
+// ===============================
 function showQuizQuestion() {
     const q = businessQuiz[quizIndex];
+    terminalClear(); // show only current question
     terminalAppend(q.q);
-    q.options.forEach(opt => terminalAppend(opt));
+
+    const panel = document.getElementById("terminal-panel");
+
+    q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.style.margin = "0.25rem";
+        btn.style.borderRadius = "50px";
+        btn.style.border = "2px solid #22c55e";
+        btn.style.backgroundColor = "#202020";
+        btn.style.color = "#f9fafb";
+        btn.style.cursor = "pointer";
+        btn.style.padding = "0.5rem 1rem";
+        btn.onclick = () => {
+            // Lock answer immediately
+            quizAnswers.push(opt[0]); // A/B/C/D
+            terminalAppend(`Answer recorded: ${opt[0]}`, "success");
+
+            quizIndex++;
+            if (quizIndex < businessQuiz.length) {
+                showQuizQuestion();
+            } else {
+                finishBusinessQuiz();
+            }
+        };
+        panel.appendChild(btn);
+    });
 }
 
-document.addEventListener("keydown", (e) => {
-    if (!quizActive) return;
-
-    const input = document.getElementById("terminal-input");
-    if (!input) return;
-
-    if (e.key === "Enter") {
-        const answer = input.value.trim().toUpperCase();
-        if (!["A","B","C","D"].includes(answer)) return;
-
-        // lock answer, prevent changes
-        quizAnswers.push(answer);
-        terminalAppend(`Answer recorded: ${answer}`, "success");
-        input.value = "";
-
-        quizIndex++;
-        if (quizIndex < businessQuiz.length) {
-            showQuizQuestion();
-        } else {
-            finishBusinessQuiz();
-        }
-    }
-});
-
+// ===============================
+// Finish Quiz
+// ===============================
 function finishBusinessQuiz() {
     quizActive = false;
     terminalAppend("Quiz complete!", "success");
@@ -184,17 +214,37 @@ function finishBusinessQuiz() {
     document.getElementById("clear-terminal").classList.remove("hidden");
 }
 
+// ===============================
+// Evaluate Answers
+// ===============================
 function evaluateBusinessQuiz(ans) {
     let weight = 0;
-    ans.forEach(a => { if(a==="A") weight+=1; if(a==="B") weight+=2; if(a==="C") weight+=3; if(a==="D") weight+=4; });
+    ans.forEach(a => { 
+        if(a==="A") weight+=1; 
+        else if(a==="B") weight+=2; 
+        else if(a==="C") weight+=3; 
+        else if(a==="D") weight+=4; 
+    });
+
     if(weight <= 6) return "AES-128 (sufficient)";
     if(weight <= 10) return "AES-256 (recommended)";
     if(weight <= 13) return "ChaCha20-Poly1305 (mobile preference)";
     return "AES-256 + metadata hardening (high-security tier)";
 }
 
+// ===============================
+// Load Left Panel & Bind Start Button
+// ===============================
+document.getElementById("btn-quiz-level").onclick = () => {
+    loadLeftPanel(`
+        <h2>Business Encryption Quiz</h2>
+        <p>Test your business encryption knowledge. Click the button below to start the quiz.</p>
+        <button id="start-business-quiz">Start Quiz</button>
+    `);
 
-//clear terminal
-document.getElementById("clear-terminal").onclick = () => {
-    terminalClear();
+    // Bind the Start Quiz button AFTER it exists in DOM
+    setTimeout(() => {
+        const startBtn = document.getElementById("start-business-quiz");
+        if(startBtn) startBtn.onclick = startBusinessQuiz;
+    }, 0);
 };
