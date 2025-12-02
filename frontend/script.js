@@ -63,6 +63,11 @@ document.getElementById("btn-encryption").onclick = () => {
 
 document.getElementById("btn-quiz-level").onclick = () => {
     loadLeftPanel(businessEncryptionQuizHTML);
+
+    setTimeout(() => {
+        const startBtn = document.getElementById("start-business-quiz");
+        if(startBtn) startBtn.onclick = () => startBusinessQuiz();
+    }, 0);
 };
 
 document.getElementById("btn-quiz-metadata").onclick = () => {
@@ -103,5 +108,93 @@ const businessEncryptionQuizHTML = `
 <p>Test your business encryption knowledge. Click the button below to start the quiz.</p>
 <button id="start-business-quiz">Start Quiz</button>
 `;
+const businessQuiz = [
+    {
+        q: "1. What type of data does your business store?",
+        options: ["A: Non-sensitive", "B: Internal docs", "C: Financial/PII", "D: High-security sensitive"]
+    },
+    {
+        q: "2. How long must your encrypted data remain secure?",
+        options: ["A: <3 yrs", "B: 3–10 yrs", "C: 10+ yrs", "D: Must resist future attacks"]
+    },
+    {
+        q: "3. What device types do employees primarily use?",
+        options: ["A: Consumer laptops/phones", "B: Modern computers", "C: Enterprise hardware", "D: Unknown hardware"]
+    },
+    {
+        q: "4. What is more important?",
+        options: ["A: Speed", "B: Strong encryption", "C: Maximum strength", "D: Long-term confidentiality"]
+    }
+];
 const metadataQuizHTML = `<h2>Metadata Protection</h2><p>Coming soon.</p>`;
 const socialEngineeringQuizHTML = `<h2>Social Engineering</h2><p>Coming soon.</p>`;
+
+
+// Buisness Quiz Logic
+let quizIndex = 0;
+let quizAnswers = [];
+let quizActive = false;
+
+function startBusinessQuiz() {
+    terminalClear();
+    quizIndex = 0;
+    quizAnswers = [];
+    quizActive = true;
+    terminalAppend("Business Encryption Quiz started! Type A, B, C, or D and press Enter.");
+    showQuizQuestion();
+}
+
+function showQuizQuestion() {
+    const q = businessQuiz[quizIndex];
+    terminalAppend(q.q);
+    q.options.forEach(opt => terminalAppend(opt));
+}
+
+document.addEventListener("keydown", (e) => {
+    if (!quizActive) return;
+
+    const input = document.getElementById("terminal-input");
+    if (!input) return;
+
+    if (e.key === "Enter") {
+        const answer = input.value.trim().toUpperCase();
+        if (!["A","B","C","D"].includes(answer)) return;
+
+        // lock answer, prevent changes
+        quizAnswers.push(answer);
+        terminalAppend(`Answer recorded: ${answer}`, "success");
+        input.value = "";
+
+        quizIndex++;
+        if (quizIndex < businessQuiz.length) {
+            showQuizQuestion();
+        } else {
+            finishBusinessQuiz();
+        }
+    }
+});
+
+function finishBusinessQuiz() {
+    quizActive = false;
+    terminalAppend("Quiz complete!", "success");
+
+    const recommendation = evaluateBusinessQuiz(quizAnswers);
+    terminalAppend("Recommended Encryption: " + recommendation, "success");
+
+    document.getElementById("clear-terminal").classList.remove("hidden");
+}
+
+function evaluateBusinessQuiz(ans) {
+    let weight = 0;
+    ans.forEach(a => { if(a==="A") weight+=1; if(a==="B") weight+=2; if(a==="C") weight+=3; if(a==="D") weight+=4; });
+    if(weight <= 6) return "AES-128 (sufficient)";
+    if(weight <= 10) return "AES-256 (recommended)";
+    if(weight <= 13) return "ChaCha20-Poly1305 (mobile preference)";
+    return "AES-256 + metadata hardening (high-security tier)";
+}
+
+
+//clear terminal
+document.getElementById("clear-terminal").onclick = () => {
+    terminalClear();
+};
