@@ -653,7 +653,7 @@ document.getElementById("btn-docs").onclick = () => {
     setTimeout(() => {
         const openBtn = document.getElementById("open-docs");
         if(openBtn) openBtn.onclick = () => {
-            window.open("https://github.com/YOUR_USERNAME/YOUR_REPO/blob/main/README.md", "_blank");
+            window.open("https://github.com/Github-coder-plus/encryptii/blob/main/Documentation.md", "_blank");
         };
     }, 0);
 };
