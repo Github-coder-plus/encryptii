@@ -408,3 +408,147 @@ document.getElementById("btn-quiz-metadata").onclick = () => {
         if(startBtn) startBtn.onclick = startMetadataQuiz;
     }, 0);
 };
+
+
+// individual encryption
+
+document.getElementById("btn-encryption").onclick = () => {
+    loadLeftPanel(`
+        <h2>Individual Encryption</h2>
+        <p>Choose one of these three secure encryption systems based on your needs:</p>
+        <ul>
+            <li><strong>AES-GCM-128:</strong> Fast and secure for general use.</li>
+            <li><strong>AES-GCM-256:</strong> Stronger security for sensitive files.</li>
+            <li><strong>ChaCha20-Poly1305:</strong> High performance on mobile devices.</li>
+        </ul>
+        <p><strong>Encrypt a file:</strong></p>
+        <input type="file" id="file-upload-individual">
+        <div id="individual-buttons"></div>
+
+        <hr style="margin:1rem 0; border-color:#22c55e;">
+
+        <p><strong>Decrypt a file:</strong></p>
+        <input type="file" id="file-upload-decrypt">
+        <input type="text" id="key-input" placeholder="Enter key in hex" style="margin-top:0.5rem;">
+        <select id="algorithm-select" style="margin-top:0.5rem;">
+            <option value="aes-128">AES-GCM-128</option>
+            <option value="aes-256">AES-GCM-256</option>
+            <option value="chacha20">ChaCha20-Poly1305</option>
+        </select>
+        <button id="decrypt-button" style="margin-top:0.5rem; border-radius:50px; border:2px solid #22c55e; background:#202020; color:#f9fafb; cursor:pointer; padding:0.5rem 1rem;">Decrypt</button>
+    `);
+
+    // ===== Encryption Buttons =====
+    const container = document.getElementById("individual-buttons");
+    container.innerHTML = "";
+
+    ["AES-GCM-128", "AES-GCM-256", "ChaCha20-Poly1305"].forEach(enc => {
+        const btn = document.createElement("button");
+        btn.textContent = enc;
+        btn.style.margin = "0.25rem";
+        btn.style.borderRadius = "50px";
+        btn.style.border = "2px solid #22c55e";
+        btn.style.backgroundColor = "#202020";
+        btn.style.color = "#f9fafb";
+        btn.style.cursor = "pointer";
+        btn.style.padding = "0.5rem 1rem";
+
+        btn.onclick = async () => {
+            const fileInput = document.getElementById("file-upload-individual");
+            if (!fileInput.files.length) {
+                terminalAppend("Please select a file first.", "error");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append("file", file);
+
+            // Map frontend names to backend algorithm names
+            let algo = "";
+            if (enc === "AES-GCM-128") algo = "aes-128";
+            else if (enc === "AES-GCM-256") algo = "aes-256";
+            else if (enc === "ChaCha20-Poly1305") algo = "chacha20";
+
+            formData.append("algorithm", algo);
+
+            terminalAppend(`Uploading file and encrypting using ${enc}...`, "info");
+
+            try {
+                const res = await fetch("/encrypt", { method: "POST", body: formData });
+                if (!res.ok) {
+                    const err = await res.json();
+                    terminalAppend(`Error: ${err.error}`, "error");
+                    return;
+                }
+
+                const blob = await res.blob();
+                const key = res.headers.get("X-Key");
+                const alg = res.headers.get("X-Algorithm");
+
+                // Download encrypted file
+                const downloadUrl = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = downloadUrl;
+                a.download = file.name + ".enc";
+                a.click();
+                URL.revokeObjectURL(downloadUrl);
+
+                terminalAppend(`Encryption complete! Algorithm: ${alg}, Key: ${key}`, "success");
+                document.getElementById("clear-terminal").classList.remove("hidden");
+
+            } catch (err) {
+                terminalAppend("Encryption failed: " + err.message, "error");
+            }
+        };
+
+        container.appendChild(btn);
+    });
+
+    // ===== Decrypt Button =====
+    document.getElementById("decrypt-button").onclick = async () => {
+        const fileInput = document.getElementById("file-upload-decrypt");
+        const keyHex = document.getElementById("key-input").value.trim();
+        const algorithm = document.getElementById("algorithm-select").value;
+
+        if (!fileInput.files.length) {
+            terminalAppend("Please select a file to decrypt.", "error");
+            return;
+        }
+        if (!keyHex) {
+            terminalAppend("Please enter the decryption key.", "error");
+            return;
+        }
+
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("key", keyHex);
+        formData.append("algorithm", algorithm);
+
+        terminalAppend(`Decrypting file using ${algorithm}...`, "info");
+
+        try {
+            const res = await fetch("/decrypt", { method: "POST", body: formData });
+            if (!res.ok) {
+                const err = await res.json();
+                terminalAppend(`Error: ${err.error}`, "error");
+                return;
+            }
+
+            const blob = await res.blob();
+            const downloadUrl = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = downloadUrl;
+            a.download = file.name.replace(/\.enc$/i, "_decrypted");
+            a.click();
+            URL.revokeObjectURL(downloadUrl);
+
+            terminalAppend(`Decryption complete!`, "success");
+            document.getElementById("clear-terminal").classList.remove("hidden");
+
+        } catch (err) {
+            terminalAppend("Decryption failed: " + err.message, "error");
+        }
+    };
+};
