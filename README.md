@@ -22,7 +22,7 @@ Encryptii is an adaptive, user-friendly encryption toolkit designed to protect f
 
 ---
 
-## 🚀 Beta Features (What works now)
+## 🚀 Alpha Features (What works now)
 
 - AES-GCM encryption/decryption for files (AES-256-GCM default)
 - Lightweight / Standard encryption modes (toggleable)
@@ -38,7 +38,7 @@ Encryptii is an adaptive, user-friendly encryption toolkit designed to protect f
 
 ---
 
-## ❗ Beta Limitations (what is intentionally omitted)
+## ❗ Alpha Limitations (what is intentionally omitted)
 
 The following are **not** included in this beta release and will be added in later versions:
 
