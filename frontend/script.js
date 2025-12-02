@@ -90,7 +90,30 @@ const businessEncryptionQuizHTML = `
 <button id="start-business-quiz">Start Quiz</button>
 `;
 const metadataQuizHTML = `<h2>Metadata Protection</h2><p>Coming soon.</p>`;
-const socialEngineeringQuizHTML = `<h2>Social Engineering</h2><p>Coming soon.</p>`;
+const socialEngineeringQuizHTML = `
+    <h2>Social Engineering Protection</h2>
+    <p>
+        Encryptii includes a Social Engineering Protection overlay system.
+        It highlights risky interactions in your OS by displaying warnings
+        when you click or hover over suspicious UI elements.
+    </p>
+
+    <h3>How It Helps</h3>
+    <ul>
+        <li>Warns you when a link, prompt, or popup looks suspicious</li>
+        <li>Recognizes patterns commonly used in phishing attacks</li>
+        <li>Reduces accidental clicks on malicious actions</li>
+    </ul>
+
+    <p>
+        This demo shows a simplified version of that behavior.  
+        <strong>Note:</strong> The full version is customizable.  
+        See Docs → Social Engineering for configuration details.
+    </p>
+
+    <button id="demo-social-eng">Show Demo</button>
+`;
+
 
 
 // Business quiz logic
@@ -551,4 +574,60 @@ document.getElementById("btn-encryption").onclick = () => {
             terminalAppend("Decryption failed: " + err.message, "error");
         }
     };
+};
+// social engenerring demo
+
+// ===============================
+// Social Engineering Demo Logic
+// ===============================
+function startSocialDemo() {
+    terminalClear();
+    terminalAppend("Social Engineering Demo Started!", "success");
+    terminalAppend("This is a simplified simulation of how Encryptii warns you about suspicious UI actions.");
+    terminalAppend("Click any simulated OS action below:");
+
+    const buttonsDiv = document.getElementById("terminal-buttons");
+    buttonsDiv.innerHTML = "";
+
+    const actions = [
+        { label: "Open 'Important_Document.pdf'", safe: true },
+        { label: "Run unknown .exe from email", safe: false },
+        { label: "Enter password into popup", safe: false },
+        { label: "Visit secure settings", safe: true },
+        { label: "Click shortened suspicious link", safe: false }
+    ];
+
+    actions.forEach(action => {
+        const btn = document.createElement("button");
+        btn.textContent = action.label;
+        btn.style.margin = "0.25rem";
+        btn.style.borderRadius = "50px";
+        btn.style.border = "2px solid #22c55e";
+        btn.style.backgroundColor = "#202020";
+        btn.style.color = "#f9fafb";
+        btn.style.cursor = "pointer";
+        btn.style.padding = "0.5rem 1rem";
+
+        btn.onclick = () => {
+            if (action.safe) {
+                terminalAppend(`Action: ${action.label}`, "success");
+                terminalAppend("No suspicious behavior detected.");
+            } else {
+                terminalAppend(`Action: ${action.label}`, "error");
+                terminalAppend("⚠ WARNING: This action resembles a common social engineering trick.");
+                terminalAppend("Proceed with caution or verify the source before continuing.");
+            }
+        };
+
+        buttonsDiv.appendChild(btn);
+    });
+}
+
+document.getElementById("btn-social").onclick = () => {
+    loadLeftPanel(socialEngineeringQuizHTML);
+
+    setTimeout(() => {
+        const demoBtn = document.getElementById("demo-social-eng");
+        if (demoBtn) demoBtn.onclick = () => startSocialDemo();
+    }, 0);
 };
