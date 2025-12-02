@@ -98,22 +98,25 @@ const socialEngineeringQuizHTML = `<h2>Social Engineering</h2><p>Coming soon.</p
 // ===============================
 // Terminal Utilities
 // ===============================
-function terminalAppend(msg, type = "info") {
-    const panel = document.getElementById("terminal-panel");
+// Append messages to #terminal-messages only
+function terminalAppend(msg, type="info") {
+    const container = document.getElementById("terminal-messages");
     const p = document.createElement("p");
 
-    if (type === "error") p.className = "log-error";
-    else if (type === "success") p.className = "log-success";
-    else p.className = "log-info";
+    if(type==="error") p.className="log-error";
+    else if(type==="success") p.className="log-success";
+    else p.className="log-info";
 
     p.textContent = msg;
-    panel.appendChild(p);
-    panel.scrollTop = panel.scrollHeight;
+    container.appendChild(p);
+    container.scrollTop = container.scrollHeight;
 }
 
+// Clear only messages, not buttons
 function terminalClear() {
-    const panel = document.getElementById("terminal-panel");
-    panel.innerHTML = `<p class="log-info">Terminal cleared.</p>`;
+    const container = document.getElementById("terminal-messages");
+    container.innerHTML = `<p class="log-info">Terminal cleared.</p>`;
+    document.getElementById("terminal-buttons").innerHTML = ""; // clear old buttons if needed
     document.getElementById("clear-terminal").classList.add("hidden");
 }
 
@@ -170,10 +173,14 @@ function startBusinessQuiz() {
 // ===============================
 function showQuizQuestion() {
     const q = businessQuiz[quizIndex];
-    terminalClear(); // show only current question
+
+    // Clear only the messages, not the buttons container
+    const messagesDiv = document.getElementById("terminal-messages");
+    messagesDiv.innerHTML = ""; 
     terminalAppend(q.q);
 
-    const panel = document.getElementById("terminal-panel");
+    const buttonsDiv = document.getElementById("terminal-buttons");
+    buttonsDiv.innerHTML = ""; // remove previous question buttons
 
     q.options.forEach(opt => {
         const btn = document.createElement("button");
@@ -185,9 +192,9 @@ function showQuizQuestion() {
         btn.style.color = "#f9fafb";
         btn.style.cursor = "pointer";
         btn.style.padding = "0.5rem 1rem";
+
         btn.onclick = () => {
-            // Lock answer immediately
-            quizAnswers.push(opt[0]); // A/B/C/D
+            quizAnswers.push(opt[0]); // Lock answer: A/B/C/D
             terminalAppend(`Answer recorded: ${opt[0]}`, "success");
 
             quizIndex++;
@@ -197,7 +204,8 @@ function showQuizQuestion() {
                 finishBusinessQuiz();
             }
         };
-        panel.appendChild(btn);
+
+        buttonsDiv.appendChild(btn);
     });
 }
 
