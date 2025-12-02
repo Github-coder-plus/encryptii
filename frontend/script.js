@@ -226,8 +226,6 @@ function finishBusinessQuiz() {
     document.getElementById("clear-terminal").classList.remove("hidden");
 }
 
-}
-
 // ===============================
 // Evaluate Answers
 // ===============================
