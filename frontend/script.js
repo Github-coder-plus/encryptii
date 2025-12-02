@@ -262,3 +262,151 @@ document.getElementById("btn-quiz-level").onclick = () => {
         if(startBtn) startBtn.onclick = startBusinessQuiz;
     }, 0);
 };
+
+
+// metadata quiz logic
+
+// ===============================
+// Metadata Quiz Data
+// ===============================
+const metadataQuizData = [
+    {
+        q: "1. How sensitive is your data?",
+        options: [
+            "A: Public, can be freely shared",
+            "B: Internal, minor confidentiality needed",
+            "C: Highly sensitive, requires strict privacy"
+        ]
+    },
+    {
+        q: "2. How long must your metadata remain protected?",
+        options: [
+            "A: Short-term (<1 year)",
+            "B: Medium-term (1–5 years)",
+            "C: Long-term (>5 years)"
+        ]
+    },
+    {
+        q: "3. How many people/devices need access?",
+        options: [
+            "A: Few or public access",
+            "B: Some restricted access",
+            "C: Very limited, strictly controlled"
+        ]
+    },
+    {
+        q: "4. What is more important?",
+        options: [
+            "A: Convenience / speed",
+            "B: Moderate protection",
+            "C: Maximum metadata security"
+        ]
+    }
+];
+
+// ===============================
+// Metadata Quiz State
+// ===============================
+let metadataQuizIndex = 0;
+let metadataQuizAnswers = [];
+let metadataQuizActive = false;
+
+// ===============================
+// Start Metadata Quiz
+// ===============================
+function startMetadataQuiz() {
+    terminalClear();
+    metadataQuizIndex = 0;
+    metadataQuizAnswers = [];
+    metadataQuizActive = true;
+    terminalAppend("Metadata Protection Quiz started! Click a button to answer.");
+    showMetadataQuestion();
+}
+
+// ===============================
+// Show One Metadata Question at a Time
+// ===============================
+function showMetadataQuestion() {
+    const q = metadataQuizData[metadataQuizIndex];
+
+    const messagesDiv = document.getElementById("terminal-messages");
+    messagesDiv.innerHTML = "";
+    terminalAppend(q.q);
+
+    const buttonsDiv = document.getElementById("terminal-buttons");
+    buttonsDiv.innerHTML = "";
+
+    q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.style.margin = "0.25rem";
+        btn.style.borderRadius = "50px";
+        btn.style.border = "2px solid #22c55e";
+        btn.style.backgroundColor = "#202020";
+        btn.style.color = "#f9fafb";
+        btn.style.cursor = "pointer";
+        btn.style.padding = "0.5rem 1rem";
+
+        btn.onclick = () => {
+            metadataQuizAnswers.push(opt[0]); // Lock answer A/B/C
+            terminalAppend(`Answer recorded: ${opt[0]}`, "success");
+
+            metadataQuizIndex++;
+            if (metadataQuizIndex < metadataQuizData.length) {
+                showMetadataQuestion();
+            } else {
+                finishMetadataQuiz();
+            }
+        };
+
+        buttonsDiv.appendChild(btn);
+    });
+}
+
+// ===============================
+// Finish Metadata Quiz
+// ===============================
+function finishMetadataQuiz() {
+    metadataQuizActive = false;
+    document.getElementById("terminal-buttons").innerHTML = ""; // remove buttons
+
+    terminalAppend("Quiz complete!", "success");
+
+    const recommendation = evaluateMetadataQuiz(metadataQuizAnswers);
+    terminalAppend("Recommended Metadata Protection Level: " + recommendation, "success");
+
+    document.getElementById("clear-terminal").classList.remove("hidden");
+}
+
+// ===============================
+// Evaluate Metadata Quiz Answers
+// ===============================
+function evaluateMetadataQuiz(ans) {
+    let weight = 0;
+    ans.forEach(a => {
+        if(a === "A") weight += 1;
+        else if(a === "B") weight += 2;
+        else if(a === "C") weight += 3;
+    });
+
+    if(weight <= 5) return "Basic Metadata Protection";
+    if(weight <= 8) return "Intermediate Metadata Protection";
+    return "Advanced Metadata Protection";
+}
+
+// ===============================
+// Load Left Panel & Bind Metadata Quiz Start
+// ===============================
+document.getElementById("btn-quiz-metadata").onclick = () => {
+    loadLeftPanel(`
+        <h2>Metadata Protection Quiz</h2>
+        <p>Determine which level of metadata protection your organization requires. Click the button below to start the quiz.</p>
+        <button id="start-metadata-quiz">Start Quiz</button>
+    `);
+
+    // Bind start button after it exists
+    setTimeout(() => {
+        const startBtn = document.getElementById("start-metadata-quiz");
+        if(startBtn) startBtn.onclick = startMetadataQuiz;
+    }, 0);
+};
