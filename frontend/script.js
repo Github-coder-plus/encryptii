@@ -27,3 +27,53 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// Utility: Replace left panel content
+function loadLeftPanel(html) {
+    const panel = document.getElementById("left-panel");
+    panel.innerHTML = html;
+}
+
+// Button handlers
+document.getElementById("btn-about").onclick = () => {
+    loadLeftPanel(aboutPageHTML);
+};
+
+document.getElementById("btn-encryption").onclick = () => {
+    loadLeftPanel(individualEncryptionHTML);
+};
+
+document.getElementById("btn-business").onclick = () => {
+    loadLeftPanel(businessEncryptionQuizHTML);
+};
+
+document.getElementById("btn-metadata").onclick = () => {
+    loadLeftPanel(metadataQuizHTML);
+};
+
+document.getElementById("btn-social").onclick = () => {
+    loadLeftPanel(socialEngineeringQuizHTML);
+};
+
+
+
+const aboutPageHTML = `
+    <h2>About Encryptii</h2>
+    <p>Encryptii is a modern encryption platform designed to help individuals and businesses protect their digital assets with clarity and speed.</p>
+
+    <h3>Core Capabilities</h3>
+    <ul>
+        <li>Local AES-256 file encryption</li>
+        <li>Business-oriented encryption recommendations</li>
+        <li>Metadata protection analysis</li>
+        <li>Social engineering defense training</li>
+    </ul>
+
+    <h3>Our Mission</h3>
+    <p>To make strong encryption accessible, intuitive, and adaptable to real-world security needs—without requiring technical knowledge.</p>
+
+    <h3>How It Works</h3>
+    <p>Encryptii runs locally in your browser and communicates with a secure Python backend to process encryption tasks. No user files or keys are stored.</p>
+
+    <h3>Alpha Notice</h3>
+    <p>This is an early release of Encryptii intended for testing core functionality, UI flow, and quizzes. Performance and UX will continue improving.</p>
+`;
