@@ -57,6 +57,7 @@ cd encryptii
 python app.py
 ```
 ### Notes:
+You can call which encryption system you wish to use based on what you need.
 
 Files uploaded are stored in the uploads/ folder.
 
