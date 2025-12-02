@@ -112,21 +112,11 @@ function terminalAppend(msg, type="info") {
     container.scrollTop = container.scrollHeight;
 }
 
-/**
- * Clear terminal messages.
- * @param {boolean} clearButtons - whether to also clear the buttons container
- */
-function terminalClear(clearButtons = false) {
-    const messagesDiv = document.getElementById("terminal-messages");
-    messagesDiv.innerHTML = `<p class="log-info">Terminal cleared.</p>`;
-
-    if (clearButtons) {
-        const buttonsDiv = document.getElementById("terminal-buttons");
-        buttonsDiv.innerHTML = "";
-    }
-
-    document.getElementById("clear-terminal").classList.add("hidden");
-}
+// Clear only messages, not buttons
+function terminalClear() {
+    const container = document.getElementById("terminal-messages");
+    container.innerHTML = `<p class="log-info">Terminal cleared.</p>`;
+    document.getElementById("terminal-buttons").innerHTML = ""; // clear old buttons if needed
 
 }
 
