@@ -631,3 +631,29 @@ document.getElementById("btn-social").onclick = () => {
         if (demoBtn) demoBtn.onclick = () => startSocialDemo();
     }, 0);
 };
+// docs
+
+document.getElementById("btn-docs").onclick = () => {
+    loadLeftPanel(`
+        <h2>Documentation</h2>
+        <p>For full setup instructions, usage, and customization, visit our GitHub documentation.</p>
+        <button id="open-docs" style="
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: 2px solid #22c55e;
+            background-color: #202020;
+            color: #f9fafb;
+            cursor: pointer;
+            font-weight: 600;
+        ">Open Docs</button>
+    `);
+
+    // Bind click after button exists
+    setTimeout(() => {
+        const openBtn = document.getElementById("open-docs");
+        if(openBtn) openBtn.onclick = () => {
+            window.open("https://github.com/YOUR_USERNAME/YOUR_REPO/blob/main/README.md", "_blank");
+        };
+    }, 0);
+};
