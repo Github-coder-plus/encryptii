@@ -33,7 +33,6 @@ function loadLeftPanel(html) {
     panel.innerHTML = html;
 }
 
-// Button handlers
 document.getElementById("btn-about").onclick = () => {
     loadLeftPanel(aboutPageHTML);
 };
@@ -42,17 +41,18 @@ document.getElementById("btn-encryption").onclick = () => {
     loadLeftPanel(individualEncryptionHTML);
 };
 
-document.getElementById("btn-business").onclick = () => {
+document.getElementById("btn-quiz-level").onclick = () => {
     loadLeftPanel(businessEncryptionQuizHTML);
 };
 
-document.getElementById("btn-metadata").onclick = () => {
+document.getElementById("btn-quiz-metadata").onclick = () => {
     loadLeftPanel(metadataQuizHTML);
 };
 
 document.getElementById("btn-social").onclick = () => {
     loadLeftPanel(socialEngineeringQuizHTML);
 };
+
 
 
 
@@ -77,3 +77,7 @@ const aboutPageHTML = `
     <h3>Alpha Notice</h3>
     <p>This is an early release of Encryptii intended for testing core functionality, UI flow, and quizzes. Performance and UX will continue improving.</p>
 `;
+const individualEncryptionHTML = `<h2>Individual Encryption</h2><p>Coming soon.</p>`;
+const businessEncryptionQuizHTML = `<h2>Business Encryption</h2><p>Coming soon.</p>`;
+const metadataQuizHTML = `<h2>Metadata Protection</h2><p>Coming soon.</p>`;
+const socialEngineeringQuizHTML = `<h2>Social Engineering</h2><p>Coming soon.</p>`;
