@@ -214,12 +214,18 @@ function showQuizQuestion() {
 // ===============================
 function finishBusinessQuiz() {
     quizActive = false;
+
+    // Clear any remaining buttons so they can't be clicked after quiz ends
+    document.getElementById("terminal-buttons").innerHTML = "";
+
     terminalAppend("Quiz complete!", "success");
 
     const recommendation = evaluateBusinessQuiz(quizAnswers);
     terminalAppend("Recommended Encryption: " + recommendation, "success");
 
     document.getElementById("clear-terminal").classList.remove("hidden");
+}
+
 }
 
 // ===============================
