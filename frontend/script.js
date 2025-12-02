@@ -78,6 +78,10 @@ const aboutPageHTML = `
     <p>This is an early release of Encryptii intended for testing core functionality, UI flow, and quizzes. Performance and UX will continue improving.</p>
 `;
 const individualEncryptionHTML = `<h2>Individual Encryption</h2><p>Coming soon.</p>`;
-const businessEncryptionQuizHTML = `<h2>Business Encryption</h2><p>Coming soon.</p>`;
+const businessEncryptionQuizHTML = `
+<h2>Business Encryption Quiz</h2>
+<p>Test your business encryption knowledge. Click the button below to start the quiz.</p>
+<button id="start-business-quiz">Start Quiz</button>
+`;
 const metadataQuizHTML = `<h2>Metadata Protection</h2><p>Coming soon.</p>`;
 const socialEngineeringQuizHTML = `<h2>Social Engineering</h2><p>Coming soon.</p>`;
