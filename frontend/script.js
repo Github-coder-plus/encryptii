@@ -86,7 +86,7 @@ const aboutPageHTML = `
 const individualEncryptionHTML = `<h2>Individual Encryption</h2><p>Coming soon.</p>`;
 const businessEncryptionQuizHTML = `
 <h2>Business Encryption Quiz</h2>
-<p>Test your business encryption knowledge. Click the button below to start the quiz.</p>
+<p>Determine which type of encryption you need for your Business based on the constrictions you have. Click the button below to start the quiz.</p>
 <button id="start-business-quiz">Start Quiz</button>
 `;
 const metadataQuizHTML = `<h2>Metadata Protection</h2><p>Coming soon.</p>`;
